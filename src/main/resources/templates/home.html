@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{css/home.css}" />
+    <title>Document</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>id</td>
+        <td>title</td>
+        <td>author</td>
+        <td>link</td>
+        <td th:if="${books.size()>0}">delete</td>
+      </tr>
+      <tr th:each="book:${books}">
+        <td th:text="${book.id}">id</td>
+        <td th:text="${book.title}">name</td>
+        <td th:text="${book.author}">author</td>
+        <td>
+          <a th:href="${book.link}" th:text="${book.link}">link</a>
+        </td>
+        <td>
+          <a th:href="${book.deleteLink}"><img th:src="@{img/delete.png}" /></a>
+        </td>
+      </tr>
+
+      <tr>
+        <form action="add" method="post" th:object="${newBook}">
+          <td><button type="submit">Add</button></td>
+          <td><input type="text" th:field="*{title}" /></td>
+          <td><input type="text" th:field="*{author}" /></td>
+          <td><input type="text" th:field="*{link}" /></td>
+          <td>
+            <div th:if="${#fields.hasErrors()}">
+              <p style="color: red;">Can't add new book. Check and try again</p>
+            </div>
+          </td>
+        </form>
+      </tr>
+    </table>
+  </body>
+</html>
